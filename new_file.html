@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>母亲节 · 致妈妈的信</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fef4f8;
+            font-family: "思源宋体", serif;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        /* 信封容器 */
+        .envelope-wrap {
+            position: relative;
+            cursor: pointer;
+            transition: all 1.2s cubic-bezier(0.25,0.8,0.25,1);
+            /* 核心：限制信封最大尺寸 */
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+        }
+        /* 信封主体 纯css绘制 */
+        .envelope {
+            width: 100%;
+            /* 固定宽高比，不会被手机撑大 */
+            padding-top: 66.66%;
+            background: #f8e8ee;
+            border-radius: 12px;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(216, 90, 124, 0.18);
+        }
+        /* 信封盖子 */
+        .envelope-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: #f3d9e2;
+            border-radius: 12px 12px 0 0;
+            clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%);
+            transform-origin: top center;
+            transition: transform 1.2s ease;
+            z-index: 2;
+        }
+        /* 封口爱心 */
+        .heart-seal {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 24px;
+            color: #d85a7c;
+            z-index: 3;
+            transition: opacity 0.8s;
+        }
+        /* 点击后信封盖子翻开 */
+        .envelope-wrap.open .envelope-top{
+            transform: rotateX(180deg);
+        }
+        .envelope-wrap.open .heart-seal{
+            opacity: 0;
+        }
+
+        /* 信纸 初始藏在信封里 */
+        .letter {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            width: 85%;
+            background: #fffafc;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            opacity: 0;
+            transition: all 1s ease 0.3s;
+            z-index: 1;
+        }
+        /* 信封打开 信纸上浮显示 */
+        .envelope-wrap.open .letter{
+            opacity: 1;
+            transform: translateX(-50%) translateY(-20px);
+        }
+
+        /* 信纸内容样式 */
+        h1 {
+            color: #d85a7c;
+            font-size: 26px;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .flower-tip{
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        .text-item {
+            font-size: 16px;
+            color: #555;
+            line-height: 2.4;
+            text-align: center;
+            margin: 8px 0;
+            min-height: 24px;
+        }
+        /* 打字光标 */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #d85a7c;
+            margin-left: 2px;
+            animation: blink 0.8s infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink {
+            0%,50%{opacity:1;}
+            51%,100%{opacity:0;}
+        }
+        /* 底部爱心 */
+        .love {
+            text-align: center;
+            margin-top: 40px;
+            color: #d85a7c;
+            font-size: 17px;
+            animation: beat 1.6s ease-in-out infinite;
+        }
+        @keyframes beat {
+            0%,100%{transform:scale(1);}
+            50%{transform:scale(1.06);}
+        }
+        /* 点击提示文字 */
+        .tip{
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #b88899;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+<div class="envelope-wrap" id="envWrap">
+    <!-- 信封盖子 -->
+    <div class="envelope-top"></div>
+    <!-- 信封主体 -->
+    <div class="envelope"></div>
+    <!-- 封口爱心 -->
+    <div class="heart-seal">❤</div>
+    <!-- 点击提示 -->
+    <div class="tip">点击信封，开启信件</div>
+
+    <!-- 信纸内容 + 你的文案 -->
+    <div class="letter">
+        <h1>致赵女士</h1>
+        <div class="flower-tip">💐</div>
+
+        <div class="text-item" data-text="人间五月 鲜花遍地"></div>
+        <div class="text-item" data-text="盛开的朵朵温柔 都是给妈妈的谢礼"></div>
+        <div class="text-item" data-text="祝你母亲节快乐"></div>
+        <div class="text-item" data-text="也祝你身体健康 平安喜乐"></div>
+        <div class="text-item" data-text="对自己好一点 照顾好自己"></div>
+        <div class="text-item" data-text="该休息的时候就要好好休息"></div>
+        <div class="text-item" data-text="烦心事都抛开"></div>
+        <div class="text-item" data-text="愿你每天轻松自在 天天开心"></div>
+
+        <div class="love">from 梦瑶 ❤</div>
+    </div>
+</div>
+
+<script>
+    const envWrap = document.getElementById('envWrap');
+    const textItems = document.querySelectorAll('.text-item');
+
+    // 超慢温柔打字参数
+    const typeSpeed = 150;     // 单字极慢
+    const lineInterval = 1200; // 每行间隔拉长
+
+    // 点击打开信封
+    envWrap.addEventListener('click', ()=>{
+        envWrap.classList.add('open');
+        // 信封开完延迟再开始打字，仪式感拉满
+        setTimeout(() => {
+            startTypeWrite();
+        }, 1800);
+    });
+
+    // 逐行打字机
+    function startTypeWrite(){
+        textItems.forEach((item, idx) => {
+            const txt = item.dataset.text;
+            setTimeout(() => {
+                let i = 0;
+                item.innerHTML = `<span class="cursor"></span>`;
+                const timer = setInterval(() => {
+                    i++;
+                    item.innerHTML = txt.substring(0,i) + `<span class="cursor"></span>`;
+                    if(i >= txt.length){
+                        clearInterval(timer);
+                        item.querySelector('.cursor').remove();
+                    }
+                }, typeSpeed);
+            }, idx * lineInterval);
+        });
+    }
+</script>
+
+</body>
+</html>
